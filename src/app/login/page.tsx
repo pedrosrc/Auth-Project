@@ -1,13 +1,36 @@
 'use client'
 import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { setCookie } from "cookies-next"
+import api from "@/service/api";
 
 export default function Login() {
 
+    
+
     const [emailUser, setEmailUser] = useState<string>('')
     const [passwordUser, setPasswordUser] = useState<string>('')
+    const router = useRouter();
 
-    async function LoginUser() {
-        alert('ok')
+    async function handleLogin() {
+        
+        if(!emailUser && !passwordUser){
+            return alert('Digite seus dados corretamente!')
+        }
+
+        const response = await api.post('auth/login',{
+            body: JSON.stringify({
+                emailUser,
+                passwordUser})
+        })
+        .then(()=>{
+            setCookie('authorization', response)
+            router.push('/dashboard')
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
+        
     }
 
     return (
@@ -20,7 +43,7 @@ export default function Login() {
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-6" action="#" onSubmit={LoginUser} method="POST">
+                    <form className="space-y-6" action="#" onSubmit={handleLogin} method="POST">
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                                 Email:

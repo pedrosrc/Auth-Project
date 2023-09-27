@@ -1,5 +1,45 @@
+'use client'
+
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import { useJwt } from "react-jwt";
+import { getCookie, deleteCookie } from "cookies-next"
+import api from "@/service/api"
 
 export default function Dashboard() {
+    
+
+    // const { token } = req.query;
+
+    // try {
+    // const response = await axios.get('URL_DA_SUA_API_AQUI', {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // });
+
+    // const userId = response.data.userId;
+    const [user, setUser] = useState<any[]>([])
+
+    useEffect(()=>{
+        async function loadUser() {
+            const token = getCookie('authorization')
+            const response = api.get(`/user/`,{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            })
+        }
+        loadUser();
+    },[]);
+
+    const router = useRouter();
+    async function handleLogout() {
+        
+        deleteCookie('token')
+        router.push('/login')
+    }
+
     return (
         <main>
             <section className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:px-8">
@@ -20,7 +60,7 @@ export default function Dashboard() {
                 <div>
                     <button
                         className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 max-width"
-                    >
+                    onClick={handleLogout}>
                         Sair
                     </button>
                 </div>

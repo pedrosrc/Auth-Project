@@ -1,15 +1,48 @@
 'use client'
 import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { setCookie } from "cookies-next"
+import api from "@/service/api"
 
 export default function Register() {
 
-    const [nameUser, setNameUser] = useState<string>('')
-    const [emailUser, setEmailUser] = useState<string>('')
-    const [passwordUser, setPasswordUser] = useState<string>('')
-    const [passwordConfim, setPasswordConfirm] = useState<string>('')
+    
+    const [formData, setFormData] = useState<any>({
+        nameUser: '',
+        emailUser: '',
+        passwordUser: ''
+    })
+    const [passwordConfirm, setPasswordConfirm] = useState<string>('')
 
-    async function RegisterUser() {
-        alert('Ok')
+    const formState = (event: any, name: any) => {
+        setFormData({
+            ...formData,
+            [name]: event.target.value
+        })
+    }
+    //const [errorMsg, setErrorMsg] = useState<string>('')
+    const router = useRouter();
+    async function handleRegister() {
+        
+        try {
+
+            if (!formData.emailUser && !formData.passwordUser && !formData.nameUser && !passwordConfirm) {
+                return alert('Digite seus dados corretamente!')
+            }
+            else if (formData.passwordUser !== passwordConfirm) {
+                return alert('As senhas não coincidem!')
+            }
+
+            const response = await api.post('auth/register', {
+                body: formData
+            })
+            console.log(response)
+            setCookie('authorization', response)
+            router.push('/dashboard')
+        } 
+        catch (error) {
+            console.log(error)
+        }
     }
 
 
@@ -23,8 +56,8 @@ export default function Register() {
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-6" onSubmit={RegisterUser} method="POST">
-                    <div>
+                    <form className="space-y-6" onSubmit={handleRegister} method="POST">
+                        <div>
                             <label htmlFor="text" className="block text-sm font-medium leading-6 text-gray-900">
                                 Nome:
                             </label>
@@ -36,8 +69,8 @@ export default function Register() {
                                     autoComplete="text"
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    value={nameUser}
-                                    onChange={(e) => setNameUser(e.target.value)}
+                                    value={formData.nameUser}
+                                    onChange={(e) => {formState(e, 'nameUser')}}
                                     placeholder="Digite seu nome"
                                 />
                             </div>
@@ -54,8 +87,8 @@ export default function Register() {
                                     autoComplete="email"
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    value={emailUser}
-                                    onChange={(e) => setEmailUser(e.target.value)}
+                                    value={formData.emailUser}
+                                    onChange={(e) => formState(e, 'emailUser')}
                                     placeholder="Digite seu email"
                                 />
                             </div>
@@ -80,8 +113,8 @@ export default function Register() {
                                     autoComplete="current-password"
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    value={passwordUser}
-                                    onChange={(e) => setPasswordUser(e.target.value)}
+                                    value={formData.passwordUser}
+                                    onChange={(e) => formState(e, 'passwordUser')}
                                     placeholder="Digite sua senha"
                                 />
                             </div>
@@ -89,7 +122,7 @@ export default function Register() {
                         <div>
                             <div className="flex items-center justify-between">
                                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Senha:
+                                    Confirme sua Senha:
                                 </label>
                             </div>
                             <div className="mt-2">
@@ -100,9 +133,9 @@ export default function Register() {
                                     autoComplete="current-password"
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    value={passwordConfim}
+                                    value={passwordConfirm}
                                     onChange={(e) => setPasswordConfirm(e.target.value)}
-                                    placeholder="Confirme sua senha"
+                                    placeholder="Confirme sua senha novamente"
                                 />
                             </div>
                         </div>
@@ -111,7 +144,7 @@ export default function Register() {
                                 type="submit"
                                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
-                               Registrar
+                                Registrar
                             </button>
                         </div>
                     </form>
