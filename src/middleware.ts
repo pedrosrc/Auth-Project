@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 
 export default function middleware(req: NextRequest){
-    const token = req.cookies.get('token')?.value
+    const token = req.cookies.get('authorization')?.value
 
     const signInURL = new URL('/login', req.url)
 
@@ -15,5 +15,5 @@ export default function middleware(req: NextRequest){
 }
 
 export const config = {
-    matcher: ['/', '/dashboard/:path*']
+    matcher: ['/dashboard/:path*']
 }

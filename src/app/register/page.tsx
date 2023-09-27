@@ -15,12 +15,13 @@ export default function Register() {
     const [passwordConfirm, setPasswordConfirm] = useState<string>('')
 
     const formState = (event: any, name: any) => {
+        event.preventDefault()
         setFormData({
             ...formData,
             [name]: event.target.value
         })
     }
-    //const [errorMsg, setErrorMsg] = useState<string>('')
+    const [errorMsg, setErrorMsg] = useState<any>({})
     const router = useRouter();
     async function handleRegister() {
         
@@ -33,12 +34,17 @@ export default function Register() {
                 return alert('As senhas não coincidem!')
             }
 
-            const response = await api.post('auth/register', {
-                body: formData
+            await api.post('auth/register', {
+                name: formData.nameUser,
+                email: formData.emailUser,
+                password: formData.passwordUser,
+                confirmpassword: passwordConfirm
+            }).then(()=>{
+                router.push('/login')
+            }).catch((error) => {
+                setErrorMsg(error.response.data)
             })
-            console.log(response)
-            setCookie('authorization', response)
-            router.push('/dashboard')
+            
         } 
         catch (error) {
             console.log(error)
@@ -146,6 +152,9 @@ export default function Register() {
                             >
                                 Registrar
                             </button>
+                        </div>
+                        <div>
+                            {errorMsg? <p className="error-msg">{errorMsg.msg}</p> : errorMsg}
                         </div>
                     </form>
 

@@ -5,30 +5,30 @@ import { setCookie } from "cookies-next"
 import api from "@/service/api";
 
 export default function Login() {
-
     
-
     const [emailUser, setEmailUser] = useState<string>('')
     const [passwordUser, setPasswordUser] = useState<string>('')
+    const [errorMsg, setErrorMsg] = useState<any>({})
     const router = useRouter();
 
-    async function handleLogin() {
-        
+    async function handleLogin(e:any) {
+        e.preventDefault()
         if(!emailUser && !passwordUser){
             return alert('Digite seus dados corretamente!')
         }
 
-        const response = await api.post('auth/login',{
-            body: JSON.stringify({
-                emailUser,
-                passwordUser})
+        await api.post('auth/login',{
+            email: emailUser,
+            password: passwordUser
         })
-        .then(()=>{
-            setCookie('authorization', response)
+        .then((response)=>{
+            setCookie('authorization', response.data)
+            console.log(response.data)
             router.push('/dashboard')
         })
         .catch((error)=>{
-            console.log(error)
+            console.log(error.response.data)
+            setErrorMsg(error.response.data)
         })
         
     }
@@ -96,6 +96,9 @@ export default function Login() {
                             >
                                Entrar
                             </button>
+                        </div>
+                        <div>
+                            {errorMsg? <p className="error-msg">{errorMsg.msg}</p> : errorMsg}
                         </div>
                     </form>
 
