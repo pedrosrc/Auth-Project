@@ -6,9 +6,9 @@ export default function Home() {
     <main >
       <div className="bg-white">
   
-      <div className="relative isolate px-6 ">
+      <div className="relative isolate px-6 py-16">
         
-        <div className="mx-auto max-w-2xl sm:py-48 ">
+        <div className="mx-auto max-w-2xl sm:py-12 ">
           
           <div className="text-center">
             <div className="flex items-center justify-center"> <Image src="/auth.png" alt="Logo" width={200} height={200}/> </div>
@@ -16,8 +16,7 @@ export default function Home() {
               SystemAuth
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              Sistema de autenticação de criado por Pedro Leonardo, com intuito de demonstrar minhas habilidades em um projeto voltado
-              para estudos.
+              Sistema de autenticação criado por <a href="https://www.linkedin.com/in/pedroleodev/" target="_blank" className="special">Pedro Leonardo</a>.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a

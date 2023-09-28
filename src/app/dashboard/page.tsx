@@ -4,31 +4,33 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { getCookie, deleteCookie } from "cookies-next"
 import api from "@/service/api"
+import { SiReact, SiTypescript, SiNodedotjs, SiMongodb, SiTailwindcss, SiNextdotjs, SiExpress } from 'react-icons/si'
+import {DiCode, DiGitBranch} from 'react-icons/di'
 
 export default function Dashboard() {
-    
+
     const [user, setUser] = useState<any>({})
 
-    useEffect(()=>{
+    useEffect(() => {
         async function loadUser() {
             const token = getCookie('authorization')
-            await api.get(`/user`,{
-                headers:{
+            await api.get(`/user`, {
+                headers: {
                     Authorization: `${token}`
                 }
-            }).then((response)=>{
+            }).then((response) => {
                 setUser(response.data)
                 console.log(response.data)
-            }).catch((error)=>{
+            }).catch((error) => {
                 console.log(error)
             })
         }
         loadUser();
-    },[])
+    }, [])
 
     const router = useRouter();
     async function handleLogout() {
-        
+
         deleteCookie('token')
         router.push('/login')
     }
@@ -45,15 +47,36 @@ export default function Dashboard() {
                     <figure className="mt-10">
                         <blockquote className="text-center text-xl font-semibold leading-8 text-gray-900 sm:text-2xl sm:leading-9">
                             <p>
-                                Essa aplicação de autenticação serve para demonstrar meus conhecimentos, feita 100% por <a href="https://www.linkedin.com/in/pedroleodev/" target="_blank" className="special">Pedro Leonardo</a>. No Front-End utilizei: TypeScript, React.Js, Next.Js e TailWind CSS, e no Back-End: Node.Js e MongoDB.
+                                Seja bem-vindo, essa aplicação tem o intuito de demonstrar meus conhecimentos. Nesse projeto usei as seguintes
+                                tecnologias:
                             </p>
                         </blockquote>
                     </figure>
                 </div>
+
+                <div className="tech">
+                    <details className="section-tech">
+                        <summary><div>Front-End <DiCode size={28} color={'purple'}/> </div></summary>
+                        <ul>
+                            <li><SiTypescript/>TypeScript</li>
+                            <li><SiReact/> React.Js</li>
+                            <li><SiNextdotjs/>NextJs</li>
+                            <li><SiTailwindcss/> TailWind CSS</li>
+                        </ul>
+                    </details>
+                    <details className="section-tech">
+                        <summary><div>Back-End <DiGitBranch size={20} color={'purple'}/> </div></summary>
+                        <ul>
+                            <li><SiNodedotjs/>Node.Js</li>
+                            <li><SiExpress/>Express</li>
+                            <li><SiMongodb/>MongoDB</li>
+                        </ul>
+                    </details>
+                </div>
                 <div>
                     <button
                         className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 max-width"
-                    onClick={handleLogout}>
+                        onClick={handleLogout}>
                         Sair
                     </button>
                 </div>

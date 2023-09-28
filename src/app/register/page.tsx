@@ -106,11 +106,6 @@ export default function Register() {
                                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                                     Senha:
                                 </label>
-                                <div className="text-sm">
-                                    <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                                        Esqueceu sua senha?
-                                    </a>
-                                </div>
                             </div>
                             <div className="mt-2">
                                 <input
@@ -134,7 +129,6 @@ export default function Register() {
                             </div>
                             <div className="mt-2">
                                 <input
-                                    id="password"
                                     name="password"
                                     type="password"
                                     autoComplete="current-password"

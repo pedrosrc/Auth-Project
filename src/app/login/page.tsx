@@ -38,7 +38,7 @@ export default function Login() {
         <main className="container_background">
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                <div className="flex items-center justify-center"> <Image src="/auth.png" alt="Logo" width={150} height={150}/> </div>
+                <div className="flex items-center justify-center"> <Image src="/auth.png" alt="Logo" width={100} height={100}/> </div>
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                         Entrar com sua conta
                     </h2>
@@ -70,11 +70,11 @@ export default function Login() {
                                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                                     Senha:
                                 </label>
-                                <div className="text-sm">
+                                {/* <div className="text-sm">
                                     <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
                                         Esqueceu sua senha?
                                     </a>
-                                </div>
+                                </div> */}
                             </div>
                             <div className="mt-2">
                                 <input
@@ -100,7 +100,7 @@ export default function Login() {
                             </button>
                         </div>
                         <div>
-                            {errorMsg? <p className="error-msg">{errorMsg.msg}</p> : errorMsg}
+                            {errorMsg ? <p className="error-msg">{errorMsg.msg}</p> : errorMsg}
                         </div>
                     </form>
 
