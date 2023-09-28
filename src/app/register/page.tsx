@@ -1,7 +1,7 @@
 'use client'
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { setCookie } from "cookies-next"
+import Image from "next/image"
 import api from "@/service/api"
 
 export default function Register() {
@@ -56,6 +56,7 @@ export default function Register() {
         <main className="container_background">
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+                <div className="flex items-center justify-center"> <Image src="/auth.png" alt="Logo" width={150} height={150}/> </div>
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                         Cadastre sua conta
                     </h2>
