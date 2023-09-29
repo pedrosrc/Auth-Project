@@ -15,6 +15,7 @@
   <li>Next.Js</li>
   <li>TypeScript</li>
   <li>React.JS</li>
+  <li>TailWind CSS</li>
   <li>Node.Js</li>
   <li>Express</li>
   <li>MongoDB</li>
