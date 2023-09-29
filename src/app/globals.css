@@ -95,7 +95,9 @@ summary > div{
   width: 150px;
 }
 .error-msg{
-  background-color: red;
-  color: #fff;
+  background-color: transparent;
+  text-align: center;
+  padding: 5px;
+  color: rgb(194, 4, 4);
   border-radius: 10px;
 }
