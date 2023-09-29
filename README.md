@@ -1,9 +1,9 @@
 <h1 align="center": center">SytemAuth</h1>
 
-<img src="./img/dashboard.PNG" width="800" align="center">
+<img src="./img/home.PNG" width="1000" align="center">
 
-<img src="./img/login.PNG" width="800" align="center">
-
+<img src="./img/login.PNG" width="1000" align="center">
+<img src="./img/register.PNG" width="1000" align="center">
 
 <h2>💡The idea of creating was:</h2>
 <ul>
